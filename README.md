@@ -35,4 +35,4 @@ https://youtu.be/VccGZs8KudA
 - Allow detailed control over targetting behaviour
 
 ## Bugs:
-- Civilian aircraft are targetted
+- none known to date
