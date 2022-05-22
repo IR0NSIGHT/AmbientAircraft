@@ -62,9 +62,10 @@ _gunny setSkill ["aimingAccuracy",1];
 };
 
 (group _unit) setCombatMode "BLUE";
+_unit setVariable ["irn_amb_aa",true,true];
 while {alive _unit} do {
-	sleep 1;
-	_helos = ((getPos _unit) nearObjects ["Air",2000]) select {alive _x && (side _x getFriend side _gunny) < 0.6 && (getPosATL _x) select 2 > 20};
+	sleep 8;
+	_helos = ((getPos _unit) nearObjects ["Air",2000]) select {alive _x && ([side _x, side _gunny] call BIS_fnc_sideIsEnemy) && (getPosATL _x) select 2 > 20};
 	if (count _helos > 0) then {
 		//get (pseudo) target
 		_helo = selectRandom _helos;
