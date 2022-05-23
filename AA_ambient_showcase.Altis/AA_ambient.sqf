@@ -1,18 +1,5 @@
-/**
-*	AmbientAA function.
-*	Call on AI controlled AA gun
-*	params
-*	_unit: AA gun
-*	_mode:	0=ambient 1=hybrid (ambient on 1km+, deadly on <1km)
-*
-*/
-params ["_unit","_mode"];
+params ["_unit"];
 if (!isServer) exitWith {};
-_legalModes = [0,1];
-if (_mode in _legalModes) exitWith {
-	diag_log ["error ambientAA, unexpected mode ", _mode," should be ",_modes];
-};
-_isHybrid = (_mode == 1); //ambient for 1km+, deadly for <1km
 
 //get (invisible dummy) target
 _getTarget = {
@@ -44,23 +31,18 @@ _getTarget = {
 	_t
 };
 
-//is this helo a legitimate target for unit?
-_legalHelo = {
-	params["_helo","_unit"];
-	alive _helo && ([side _helo, side _gunny] call BIS_fnc_sideIsEnemy) && (getPosATL _helo) select 2 > 20
-}
-
+//get nearby targets
 _i = 0;
 _veh = vehicle _unit;
 _gunny = gunner _veh;
 _gunny setSkill ["aimingAccuracy",1];
 
-//run parallel loop that force fires whenever the gun is aimedAtTarget, uses getVar ["irn_amb_aa_target"] on gunny
+//run parallel loop that force fires whenever the gun is aimedAtTarget
 [_gunny] spawn {
 	params ["_gunny"];
 	while {(alive _gunny)} do {
 		sleep 0.2;
-		_target = _gunny getVariable ["irn_amb_aa_target",objNull];
+		_target = _gunny getVariable ["target",objNull];
 		if (!isNull _target) then {
 			//fire burst while aimed
 			vehicle _gunny setVehicleAmmo 1;
@@ -75,37 +57,28 @@ _gunny setSkill ["aimingAccuracy",1];
 				};
 				sleep 0.01;
 			};	
-		} else {
-			sleep 3;
 		};
 	};
 };
 
 (group _unit) setCombatMode "BLUE";
 _unit setVariable ["irn_amb_aa",true,true];
-_range = 2000;
 while {alive _unit} do {
 	sleep 8;
-	_helos = ((getPos _unit) nearObjects ["Air",_range]) select {[_x,_unit] call _legalHelo};
+	_helos = ((getPos _unit) nearObjects ["Air",2000]) select {alive _x && ([side _x, side _gunny] call BIS_fnc_sideIsEnemy) && (getPosATL _x) select 2 > 20};
 	if (count _helos > 0) then {
-	
-		//choose target or pseudo target
+		//get (pseudo) target
 		_helo = selectRandom _helos;
-		if (_isHybrid && _helo distance _unit < (_range/2)) then {
-			//hybrid mode and helo is closer than 50% -> direct fire
-			_target = _helo;
-		} else {
-			//helo is farther than 50% OR not hybrid -> ambient fire
-			_target = [_helo,_veh] call _getTarget; 		//get (pseudo) target
-		}
-		
-		//set target as var, reveal and watch target.
-		_gunny setVariable ["irn_amb_aa_target",_target];
+		_target = [_helo,_veh] call _getTarget;
+		_gunny setVariable ["target",_target];
+
+		//target the pseudo-target
 		_gunny reveal [_target, 4];
+
+		//_gunny doWatch getPos _target;
 		_gunny doWatch getPos _target;
-		
 	} else {
-		_gunny setVariable ["irn_amb_aa_target",objNull];
+		_gunny setVariable ["target",objNull];
 		sleep 3;
 	};
 }
