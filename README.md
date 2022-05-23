@@ -16,6 +16,13 @@ https://youtu.be/VccGZs8KudA
 - Zeus: put ```[_this] execVM "AA_ambient.sqf";``` into the AA guns command field in Zeus.
 - AA Gun will run the script as long as its alive.
 
+## Modes:
+2 modes are available: 
+- __ambient__ (0): All AA fire misses the aircraft, engange up to 2.5 km<br>```[this, 0] execVM "AA_ambient.sqf";```
+- __hybrid__ (1): Ambient fire up to 2.5km, direct+deadly fire for <900m<br>```[this, 1] execVM "AA_ambient.sqf";```
+
+
+
 ## Tested:
 - in Singleplayer
 - in Multiplayer, 12+ Player mission
