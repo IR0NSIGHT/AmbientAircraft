@@ -17,7 +17,10 @@ if (!canSuspend) exitWith {
 	 ["Function can not be called in unsuspendable context. Use 'spawn' instead"] call BIS_fnc_error;
 };
 
-params ["_unit"];
+params [["_unit", objNull,[objNull]]];
+if (isNull _unit) exitWith {
+	["Unit is null."] call BIS_fnc_error;
+};
 _run = true;
 _controlVar = "IRN_aaSniper_on";
 _radiusVar = "IRN_fnc_aaSniper";
