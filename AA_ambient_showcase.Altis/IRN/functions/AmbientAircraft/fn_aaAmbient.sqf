@@ -166,9 +166,6 @@ while {alive _unit} do {
 
 	//_gunny doWatch getPos _target;
 	_gunny doWatch getPos _target;
-
-	sleep 5;
-
 };
 
 
