@@ -10,16 +10,16 @@ https://youtu.be/VccGZs8KudA
 
 ## How to use:
 - Download the example mission. 
-- Copypaste the "AA_ambient.sqf" file into your own mission folder.
+- Copypaste the IRN" folder and description.ext file into your own mission folder.
 - place an AA gun with AI crew in Eden editor
-- Editor: put ```[this] execVM "AA_ambient.sqf";``` into the AA guns init in Eden editor.
-- Zeus: put ```[_this] execVM "AA_ambient.sqf";``` into the AA guns command field in Zeus.
+- Editor: put ```[this] spawn IRN_fnc_aaAmbient``` into the AA guns init in Eden editor.
+- Zeus: put ```[_this] spawn IRN_fnc_aaAmbient";``` into the AA guns command field in Zeus.
 - AA Gun will run the script as long as its alive.
 
 ## Modes:
 2 modes are available: 
-- __ambient__ (0): All AA fire misses the aircraft, engange up to 2.5 km<br>```[this, 0] execVM "AA_ambient.sqf";```
-- __hybrid__ (1): Ambient fire up to 2.5km, direct+deadly fire for <900m<br>```[this, 1] execVM "AA_ambient.sqf";```
+- __ambient__ (0): All AA fire misses the aircraft, engange up to 2.5 km<br>```[this, 0] spawn IRN_fnc_aaAmbient;```
+- __hybrid__ (1): Ambient fire up to 2.5km, direct+deadly fire for <900m<br>```[this, 1] spawn IRN_fnc_aaAmbient";```
 
 
 
@@ -42,4 +42,5 @@ https://youtu.be/VccGZs8KudA
 - Allow detailed control over targetting behaviour
 
 ## Bugs:
-- none known to date
+- multiple aircraft at once can confuse the AA guns
+- Praetorian CRAM manages to shoot down aircraft on accident sometimes

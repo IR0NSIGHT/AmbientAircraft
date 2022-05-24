@@ -53,7 +53,7 @@ _getTarget = {
 		_time =(_helo distance _AA)/980; //time the bullet needs to travel
 		_lead = ((velocity  _helo) vectorMultiply (_time * (2+random 2)));
 		_center = _center vectorAdd _lead;
-		_offset = (vectorNormalized [-1 + random 1,-1 + random 1,0]);
+		_offset = (vectorNormalized [selectRandom [1,-1],selectRandom [1,-1],0.2]);
 		_offset = (_offset vectorMultiply _radius);
 		_offset = _center vectorAdd _offset;
 		_t setPos _offset;
@@ -131,10 +131,15 @@ while {alive _unit} do {
 			(group _unit) setCombatMode "RED";
 			_target = _helo;
 			_gunny doFire _target;
+			_unit enableAI "AUTOTARGET";
+			_unit enableAI "TARGET";
 		} else {
 			//helo is farther than 50% OR not hybrid -> ambient fire
 			_target = [_helo,_veh] call _getTarget; 		//get (pseudo) target
 			(group _unit) forgetTarget _helo;
+			_unit disableAI "AUTOTARGET";
+			_unit disableAI "TARGET";
+
 		};
 
 		//set target as var, reveal and watch target.
