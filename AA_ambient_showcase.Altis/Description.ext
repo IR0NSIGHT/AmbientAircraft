@@ -1,0 +1,7 @@
+author			= "IR0NSIGHT";
+onLoadName		= "AA Ambient Showcase";
+onLoadMission	= "A showcase mission for the ambient aircraft api";
+
+class CfgFunctions { 
+	#include "IRN\functions\init.txt"
+};

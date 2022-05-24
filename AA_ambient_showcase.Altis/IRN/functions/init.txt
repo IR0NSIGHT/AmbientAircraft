@@ -1,0 +1,11 @@
+class IRN
+{
+    class Category1
+    {
+        file 	=	"IRN\functions\AmbientAircraft";
+
+        class aaSniper {};
+		
+		class aaAmbient {};
+    };
+};
