@@ -1,11 +1,19 @@
-/**
-*	AmbientAA function.
-*	Call on AI controlled AA gun
-*	params
-*	_unit: AA gun
-*	_mode:	0=ambient 1=hybrid (ambient on 1km+, deadly on <1km)
-*
-*	return: nothing
+/*
+	Author: IR0NSIGHT
+
+	Description:
+		Unit will fire at all nearby enemy aircraft without hitting them.
+		Mode 1 (hybrid) will start using lethal fire at <1000m.
+
+	Parameter(s):
+		0:	object - AA Gun
+		1:	number - mode [0,1], default 0
+
+	Returns:
+		nothing
+
+	Examples:
+		[myAAGun, 1] call IRN_fnc_aaAmbient;
 */
 params [
 	["_unit", objNull, [objNull]],

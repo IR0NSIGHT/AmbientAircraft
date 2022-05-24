@@ -1,0 +1,5 @@
+class Other {
+    file = "IRN\functions\Other";
+    class spotter{};
+};
+
